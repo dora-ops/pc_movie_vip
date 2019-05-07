@@ -81,8 +81,8 @@ Comment.getCommentsList = function (callback) {
 Comment.getCommentByCurrentPage = function (params, callback) {
     //console.log(params)
     // select * from table limit (pageNo-1)*pageSize, pageSize;
-    db.query('select users.id, users.uname, users.face, comments.addtime, comments.content from users, comments where users.id = comments.user_id ORDER BY comments.addtime desc LIMIT  ?, ?',
-        [params.start, params.pageSize],
+    db.query('select users.id, users.uname, users.face, comments.addtime, comments.content from users, comments where users.id = comments.user_id and comments.movie_id=? ORDER BY comments.addtime desc LIMIT  ?, ?',
+        [params.movie_id,params.start, params.pageSize],
         function (err, result) {
         if (err) {
             callback(err, null);

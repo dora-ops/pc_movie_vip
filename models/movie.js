@@ -47,14 +47,14 @@ Movie.prototype.save = function (callback) {
         // 只要用户插入数据成功， 然后就开始进行数据库去重操作
         if (result.insertId > 0) {
             // 如如完毕之后，开始执行数据去重操作
-            db.query('delete from movies where url  in ' +
-                '   (select url from (select url from movies group by url having count(url)>1) as tmp1) ' +
-                '       and id not in (select id from (select min(id) as id from movies group by url having count(url)>1) as temp2)', function (err, result) {
-                if (err) {
-                    return  callback(err, null);
-                }
-                callback(null, result);
-            });
+            // db.query('delete from movies where url  in ' +
+            //     '   (select url from (select url from movies group by url having count(url)>1) as tmp1) ' +
+            //     '       and id not in (select id from (select min(id) as id from movies group by url having count(url)>1) as temp2)', function (err, result) {
+            //     if (err) {
+            //         return  callback(err, null);
+            //     }
+            //     callback(null, result);
+            // });
         }
 
     })

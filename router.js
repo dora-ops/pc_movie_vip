@@ -6,6 +6,9 @@ const router = express.Router();
 const config = require('./config');
 const fs = require('fs');
 
+
+const db = require('./models/db');
+
 const installController = require('./controllers/install');
 const indexController = require('./controllers/index');
 const userController = require('./controllers/user');
@@ -42,7 +45,24 @@ router.post('/userlog', userController.showUserlogs);                   // ç”¨æˆ
 router.get('/search', movieController.showSearchMovie);
 router.get('/search/:content', movieController.doSearchMovieOnline);
 router.post('/search', movieController.doSearchMovie);
-
+router.post('/action',(req, res, next)=>{
+    var p = req.body;
+    var page=p.page
+    conn.query(p.sql, [], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            return res.json({
+                code : 0,
+                data : result
+            });
+            // return res.render(page, {
+            //     data: result
+            // });
+        }
+    })
+});
 
 // 404 page
 router.use(function (req, res, next) {

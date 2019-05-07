@@ -236,14 +236,15 @@ exports.getTVAndImages = function (callback) {
                             console.log('本轮抓取全部电视剧信息成功')
                             callback(null, true);
 
-                            // 添加轮播图信息
-                            downloadImages(function (err, result) {
-                                if (err) return console.log(err)
-                                console.log('本轮数据抓取结束！')
-                            });
+                            
                         }
                     });
                 })
+                // 添加轮播图信息
+                downloadImages(function (err, result) {
+                    if (err) return console.log(err)
+                    console.log('本轮数据抓取结束！')
+                });
             }
         })
     })
@@ -280,7 +281,7 @@ function downloadImages(callback) {
                 if (len == result.length) callback(null, {status : true});
             });
         })
-    }, 1000*20)     // 20s 之后，开始下载图片
+    }, 1000*2)     // 20s 之后，开始下载图片
 }
 
 function delDir(path){

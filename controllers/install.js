@@ -48,39 +48,24 @@ exports.doInstall = function (req, res, next) {
                 status: -1,
                 msg: err
             })
-
-        // 开始执行安装（执行SQL语句）
-        fs.readFile(path.join(__dirname, '../video.sql'), 'utf-8', function (err, sqlStr) {
-            // 开始处理sqlStr语句,8张表
-            var sqls = sqlStr.split(';')
-            let finished = 0;
-            sqls.forEach(sql => {
-                if (typeof sql === 'string' && sql.length !== 0) {
-                    db.batchExecuteSQL(pool, sql.trim(), function (error) {
-                        //  只要执行成功的个数误差在1个范围内，就执行成功
-                        finished++
-                        if (finished === sqls.length) {
-                            // 开始写入配置文件
-                            var configInfo = `database=${dbname}\nhost=${dbip}\nuser=${username}\npassword=${password}`;
-                            fs.writeFileSync(path.join(__dirname, '../config.properties'), configInfo);
-                            // 开始实现数据抓取
-                            fetchUtil.start(true, function (err, finished) {
-                                if (err) return next(err);
-                                // 成功之后，开始初始化轮播图初始数据信息
-                                addPreviews(function (err) {
-                                    if (err) return console.log(err);
-                                    console.log('开始添加轮播图数据信息')
-                                    return res.json({
-                                        status: 1,
-                                        msg: 'success'
-                                    });
-                                })
-                            });
-                        }
-                    })
-                }
-            })
-        })
+            // 开始写入配置文件
+            var configInfo = `database=${dbname}\nhost=${dbip}\nuser=${username}\npassword=${password}`;
+            fs.writeFileSync(path.join(__dirname, '../config.properties'), configInfo);
+            // 开始实现数据抓取
+            fetchUtil.start(true, function (err, finished) {
+                if (err) return next(err);
+                // 成功之后，开始初始化轮播图初始数据信息
+                addPreviews(function (err) {
+                    if (err) return console.log(err);
+                    console.log('开始添加轮播图数据信息')
+                    return res.json({
+                        status: 1,
+                        msg: 'success'
+                    });
+                })
+            });
+       
+      
     });
 }
 

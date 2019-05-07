@@ -39,8 +39,21 @@
     </div>
 </div>
 <div class="movies clearfix">
-    <div class="w">
-        <div class="movies-type"><h1>影视推荐</h1>
+    <div class="w" id="index">
+        <div class="movies-type"><h1>话题</h1>
+            <ul>
+                <li>爱情</li>
+                <li>动作</li>
+            </ul>
+        </div>
+        <div class="movies-type"><h1>地区</h1>
+            <ul>
+                <li>美国</li>
+                <li>国内</li>
+                
+            </ul>
+        </div>
+        <div class="movies-type" ><h1>影视推荐</h1>
             <ul>
                 <li id="movie">电影</li>
                 <li id="tv">电视剧</li>
@@ -86,6 +99,16 @@
 </div>
 {{/block}} {{#block ("foot")}}
 <script>
+new Vue({
+  el: '#index',
+  data: {
+    message: 'Hello Vue.js!',
+    area:['1','2']
+  },
+  created(){
+      console.log(this)
+  }
+})
     function imgShow() {
     }
 

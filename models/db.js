@@ -12,9 +12,9 @@ let propertis = getProperties();
 let config = {
     connectionLimit : 500,
     host : 'localhost',
-    database : 'video',
+    database : 'movie_pc',
     user : 'root',
-    password : '123456'
+    password : 'root'
 };
 
 // 创建一个数据库连接池

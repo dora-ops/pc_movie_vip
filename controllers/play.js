@@ -69,7 +69,8 @@ exports.showPlay = function (req, res, next) {
                 let params = {
                     // (pageNo-1)*pageSize
                     start: 0,
-                    pageSize: 5
+                    pageSize: 5,
+                    movie_id:movie.id
                 }
                 let pageNums = pageInfo.pageNums;
                 //console.log('页面评论总数量', pageNums, Math.ceil(pageNums / 5))
@@ -142,6 +143,7 @@ exports.showPlay = function (req, res, next) {
 exports.doPlay = function (req, res, next) {
     // 1. 接受用户提交的数据信息
     let content = req.body.content;
+    let movie_id = req.body.movie_id;
     // 直接把当前时间转换为标准时间格式HH是24小时的，hh是12小时的
     let addtime = moment().format('YYYY-MM-DD HH:mm:ss')
     // 用户的ID编号
@@ -154,7 +156,8 @@ exports.doPlay = function (req, res, next) {
     let comments = new Comments({
         content,
         addtime,
-        user_id
+        user_id,
+        movie_id
     })
     comments.save(function (err, result) {
         if (err) {

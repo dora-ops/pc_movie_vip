@@ -26,14 +26,14 @@ TV.prototype.save = function (callback) {
             return callback(err, null);
         }
         // 插入完成之后开始进行数据去重
-        db.query('delete from tvs where url  in ' +
-            '   (select url from (select url from tvs group by url having count(url)>1) as tmp1) ' +
-            '       and id not in (select id from (select min(id) as id from tvs group by url having count(url)>1) as temp2)', function (err, result) {
-            if (err) {
-                return  callback(err, null);
-            }
-            callback(null, result);
-        });
+        // db.query('delete from tvs where url  in ' +
+        //     '   (select url from (select url from tvs group by url having count(url)>1) as tmp1) ' +
+        //     '       and id not in (select id from (select min(id) as id from tvs group by url having count(url)>1) as temp2)', function (err, result) {
+        //     if (err) {
+        //         return  callback(err, null);
+        //     }
+        //     callback(null, result);
+        // });
     });
 }
 

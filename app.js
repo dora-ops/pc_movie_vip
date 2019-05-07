@@ -15,7 +15,15 @@ const process = require('child_process');
 const logger = log4js.getLogger();
 let usernum = 0;                        // 定义一个全局变量
 
-
+app.all('*', function (req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "http://192.168.0.105:8080"); //为了跨域保持session，所以指定地址，不能用*    
+    res.header("Access-Control-Allow-Origin", "*"); //为了跨域保持session，所以指定地址，不能用*
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    // res.header('Access-Control-Allow-Credentials', true);
+    next();
+});
 // 日志相关
 log4js.useLogger(app, logger)
 
@@ -66,7 +74,7 @@ if (config.isDebug) {
 // 开启监听端口 server
 server.listen(80, '127.0.0.1', function () {
     console.log('Server is listening at port 80…………');
-    process.exec('start http://127.0.0.1');
+     process.exec('start http://127.0.0.1');
 })
 
 
